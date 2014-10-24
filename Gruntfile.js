@@ -32,7 +32,7 @@ module.exports = function(grunt) {
         options: {
           nodeargs: ['--harmony']
         },
-        src: ['dist/test/index.js']
+        src: ['dist/tests/index.js']
       }
     }
   });
