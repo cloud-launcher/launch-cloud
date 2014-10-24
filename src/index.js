@@ -1,0 +1,1 @@
+console.log('Now run you some ECMAScript 6!');
