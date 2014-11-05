@@ -1,18 +1,18 @@
 {
-  "name": "base-node",
-  "version": "0.0.2",
-  "description": "Base Node.JS Development Environment",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "name": "cloud-launcher",
+  "version": "0.0.1",
+  "description": "launches clouds",
+  "main": "/dist/index.js",
   "author": "Blake La Pierre",
   "license": "MIT",
   "dependencies": {
+    "generator-trees": "0.0.7",
+    "glob": "^4.0.6",
     "grunt": "^0.4.5",
     "grunt-execute": "^0.2.2",
     "grunt-traceur": "^0.2.9",
     "load-grunt-tasks": "^1.0.0",
+    "request": "^2.47.0",
     "traceur": "0.0.72",
     "traceur-runtime": "0.0.59"
   }
