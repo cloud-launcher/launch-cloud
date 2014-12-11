@@ -1,5 +1,5 @@
 {
-  "name": "cloud-launcher",
+  "name": "launch-cloud",
   "version": "0.0.1",
   "description": "launches clouds",
   "main": "/dist/index.js",
