@@ -12,17 +12,21 @@ function digitalocean(config) {
     destroyMachine
   };
 
-  function createMachine(machineDescription, resolve, reject) {
-    var api = new DOWrapper(config.token);
+  function createMachine(machineDescription) {
+    return new Promise((resolve, reject) => {
+      var api = new DOWrapper(config.token);
 
-    var {id, location, size, image, keys, userData} = machineDescription;
-    api.dropletsCreateNewDroplet(id, location, size, image, {ssh_keys: keys, user_data: userData}, apiCallbackHandler(resolve, reject));
+      var {id, location, size, image, keys, userData} = machineDescription;
+      api.dropletsCreateNewDroplet(id, location, size, image, {ssh_keys: keys, user_data: userData}, apiCallbackHandler(resolve, reject));
+    });
   }
 
-  function destroyMachine(machine, resolve, reject) {
-    var api = new DOWrapper(config.token);
+  function destroyMachine(machine) {
+    return new Promise((resolve, reject) => {
+      var api = new DOWrapper(config.token);
 
-    api.dropletsDeleteDroplet(machine.response.droplet.id, apiCallbackHandler(resolve, reject));
+      api.dropletsDeleteDroplet(machine.response.droplet.id, apiCallbackHandler(resolve, reject));
+    });
   }
 
   function apiCallbackHandler(resolve, reject) {
