@@ -7,6 +7,7 @@ Pass `launch-cloud` your desired configuration to launch.
 
 - [Installation](#installation)
 - [Sample Configuration](#sample-configuration)
+- [Concepts](#concepts)
 - [Implementation Details](#implementation-details)
     - [Providers](#providers)
         - [Digital Ocean](#providers)
@@ -35,16 +36,12 @@ Pass `launch-cloud` your desired configuration to launch.
     influxdb: 1
   },
   roles: {
-    all: ['cadvisor', 'etcd']
+    all: ['cadvisor']
   },
   containers: {
-    cadvisor: {
+    'google/cadvisor': {
       container: 'google/cadvisor',
       linkTo: 'influxdb'
-    },
-    etcd: {
-      container: 'coreos/etcd',
-      linkTo: 'etcd'
     },
     bridge: {
       container: 'cloud-launcher/bridge',
@@ -141,6 +138,37 @@ Pass `launch-cloud` your desired configuration to launch.
   }
 }
 ````
+
+
+###Concepts
+
+````
+        ____________________________________________
+        |                   Cloud                  |
+        |_____________  ____________  _____________|
+        ||   Cluster  ||   Cluster  ||   Cluster  ||
+        ||            ||            ||            ||
+        ||------------||------------||------------||
+        || Machine    || Machine    || Machine    ||
+        ||  container ||  container ||  container ||
+        ||  container ||  container ||  container ||
+        ||------------||------------||------------||
+        || Machine    || Machine    || Machine    ||
+        ||  container ||  container ||  container ||
+        ||  container ||  container ||  container ||
+        ||------------||------------||------------||
+        || Machine    || Machine    || Machine    ||
+        ||  container ||  container ||  container ||
+        ||  container ||  container ||  container ||
+        |------------------------------------------|
+        --------------------------------------------
+
+               Fig 1. Nesting of Concepts
+````
+
+A Cloud is comprised of one or more Clusters. A cluster is a collection of Machines, preferrably in close geographical proximity. Ideally, they exist in the same data center connected via a low-latency, high-bandwidth network. They may be virtual machines and may all exist on the same physical machine. Machines run containers, the deployable units of your system.
+
+By default, it is assumed that Clusters are replicated units of the same system, geographically separated for high-availability in face of physical infrastructure failure and low-latency, high-bandwidth communication with end users. Clusters may be dynamically modified separately from the other Clusters after launch to compensate for varying load or other activities.
 
 
 
