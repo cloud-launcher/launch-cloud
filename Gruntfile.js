@@ -34,7 +34,8 @@ module.exports = function(grunt) {
         },
         src: ['dist/tests/index.js']
       }
-    }
+    },
+    clean: ['dist']
   });
 
   grunt.registerTask('build', function() {
