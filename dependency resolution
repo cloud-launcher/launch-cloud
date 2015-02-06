@@ -1,0 +1,3 @@
+generate selector for node
+go up to parent
+walk down siblings, looking for paths that match selector

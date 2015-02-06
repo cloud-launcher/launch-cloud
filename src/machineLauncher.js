@@ -16,12 +16,14 @@ module.exports = (provider, log, concurrentLaunches) => {
   // Currently can only have one of these running
   // machines is a generator function that yields machine definitions
   function launch(machines) {
-    while (true) {
-      var result = machines.next(),
-          machine = result.value;
+    return new Promise((resolve, reject) => {
+      while (true) {
+        var result = machines.next(),
+            machine = result.value;
 
-      var promise = new Promise
-    }
+        var promise = new Promise
+      }
+    });
   }
 
 

@@ -1,0 +1,22 @@
+function parseConfiguration(configuration) {
+  for (var roleName in configuration) {
+    var value = configuration[roleName];
+
+    switch (type(value)) {
+      case 'number':
+        break;
+      case ''
+    }
+  }
+}
+
+
+
+root: https://github.com/blakelapierre/cloud-launcher/releases
+  optionally returns json:
+    {
+      "container1": "0.1"
+    }
+
+
+root/container1

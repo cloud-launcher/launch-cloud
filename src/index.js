@@ -1,3 +1,14 @@
+var cloud = require('./cloud/cloud');
+
+cloud({test: 'config'})
+  .launch()
+    .then(
+      value => console.log('launched', value),
+      error => console.log('launchError', error));
+
+return;
+
+
 var request = require('request'),
     uuid = require('uuid'),
     g = require('generator-trees').g,

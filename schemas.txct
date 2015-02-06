@@ -1,0 +1,47 @@
+
+
+plan:
+
+{
+  locations: {
+    providerName: ['']
+  },
+  machines: generatorFn
+}
+
+
+
+
+                        ----------------------------
+                        |           www            |
+(stdout) Outgoing Port--|                          |--Incoming Port (HTTP/80)
+(stderr) Outgoing Port--|                          |--Incoming Port (HTTPS/443)
+                        |                          |
+                        |                          |
+                        ----------------------------
+
+                          ----------------------------
+                          |         cadvisor         |
+  (stdout) Outgoing Port--|                          |--Incoming Port (HTTP/80)
+  (stderr) Outgoing Port--|                          |--Incoming Port (HTTPS/443)
+                          |                          |
+(influxdb) Outgoing Port--|                          |
+                          ----------------------------
+
+cadvisor: {
+  in: {
+    80: 'http',
+    443: 'https'
+  },
+  out: ['influxdb']
+}
+
+cadvisor: {
+  in: {
+    80: 'http',
+    443: 'https'
+  },
+  out: {
+    required: ['influxdb']
+  }
+}

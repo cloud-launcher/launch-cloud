@@ -145,7 +145,7 @@ Pass `launch-cloud` your desired configuration to launch.
 ````
         ____________________________________________
         |                   Cloud                  |
-        |_____________  ____________  _____________|
+        | ____________  ____________  ____________ |
         ||   Cluster  ||   Cluster  ||   Cluster  ||
         ||            ||            ||            ||
         ||------------||------------||------------||
@@ -166,7 +166,7 @@ Pass `launch-cloud` your desired configuration to launch.
                Fig 1. Nesting of Concepts
 ````
 
-A Cloud is comprised of one or more Clusters. A cluster is a collection of Machines, preferrably in close geographical proximity. Ideally, they exist in the same data center connected via a low-latency, high-bandwidth network. They may be virtual machines and may all exist on the same physical machine. Machines run containers, the deployable units of your system.
+A Cloud is comprised of one or more Clusters. A cluster is a collection of Machines, preferrably in close geographical proximity. Ideally, they exist in the same datacenter connected via a low-latency, high-bandwidth network. They may be virtual machines and may all exist on the same physical machine. Machines run containers, the deployable units of your system.
 
 By default, it is assumed that Clusters are replicated units of the same system, geographically separated for high-availability in face of physical infrastructure failure and low-latency, high-bandwidth communication with end users. Clusters may be dynamically modified separately from the other Clusters after launch to compensate for varying load or other activities.
 
