@@ -1,23 +1,30 @@
 const gulp = require('gulp'),
-      plugins = require('gulp-load-plugins')({rename: {'gulp-6to5': 'to5'}});
+      plugins = require('gulp-load-plugins')({rename: {'gulp-util': 'gutil', 'gulp-cached': 'cache', 'gulp-6to5': 'to5'}});
 
 const {
+  sequence,
+  gutil,
+  cache,
+  print,
   watch,
   sourcemaps,
   to5,
   jshint,
   clean,
-  concat,
   pipe
 } = plugins;
 
-gulp.task('default', ['transpile']);
+gulp.task('default', ['build']);
 
-gulp.task('dev', () => gulp.watch(paths.scripts, ['jshint']));
+gulp.task('build', sequence('clean', 'transpile'));
 
-gulp.task('transpile', ['clean', 'jshint'],
+gulp.task('dev', () => gulp.watch(paths.scripts, ['transpile']));
+
+gulp.task('transpile', ['jshint'],
   () => pipe([
     gulp.src(paths.scripts)
+    ,cache('transpile')
+    ,print()
     ,sourcemaps.init()
     ,to5()
     ,sourcemaps.write('.')
@@ -28,6 +35,8 @@ gulp.task('transpile', ['clean', 'jshint'],
 gulp.task('jshint',
   () => pipe([
     gulp.src(paths.scripts)
+    ,cache('jshint')
+    ,print()
     ,jshint()
     ,jshint.reporter('jshint-stylish')
     ,jshint.reporter('fail')
