@@ -3,23 +3,25 @@ var fs = require('fs'),
     repl = require('repl'),
     glob = require('glob'),
     request = require('request'),
-    traceur = require('traceur-runtime'),
+    polyfill = require('6to5/polyfill'),
     g = require('generator-trees').g;
 
 console.log('generators', g);
 
 
-var interleaved = g.interleave(function* () {
-  var i = 99, a = 0;
-  for (a = 0; a < 10; a++) yield function*(a) { yield a.toString() + (++i); return a.toString() + (++i); }(a);
-  return function* (a) { yield a.toString() + (++i); return a.toString() + (++i); }(a);
-}());
+// var interleaved = g.interleave(function* () {
+//   var i = 99, a = 0;
+//   for (a = 0; a < 10; a++) yield y(a);
+//   return function* (a) { yield a.toString() + (++i); return a.toString() + (++i); }(a);
 
-console.log(interleaved);
+//   function* y(a) { yield a.toString() + (++i); return a.toString() + (++i); }
+// }());
 
-console.log(g.toArray(interleaved));
+// console.log(interleaved);
 
-return;
+// console.log(g.toArray(interleaved));
+
+// return;
 
 var doWrapper = require('do-wrapper');
 
@@ -193,7 +195,7 @@ function getFiles(machine) {
     owner: 'core',
     permissiosn: '0700',
     content: indent()
-  }
+  };
 
   return [bootstrap, util].concat(_.map(services, makeFileRecord));
 }

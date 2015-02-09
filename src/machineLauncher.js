@@ -15,14 +15,14 @@ module.exports = (provider, log, concurrentLaunches) => {
 
   // Currently can only have one of these running
   // machines is a generator function that yields machine definitions
-  function launch(machines) {
-    while (true) {
-      var result = machines.next(),
-          machine = result.value;
+  // function launch(machines) {
+  //   while (true) {
+  //     var result = machines.next(),
+  //         machine = result.value;
 
-      var promise = new Promise
-    }
-  }
+  //     var promise = new Promise();
+  //   }
+  // }
 
 
   function launch(machines, progress) {
@@ -31,7 +31,7 @@ module.exports = (provider, log, concurrentLaunches) => {
       launchMachines();
 
       function launchMachines() {
-        if (machines.remaining == 0) {
+        if (machines.remaining === 0) {
           if (availableProviders.length == concurrentLaunches) return launchResolve(machines);
           else {
             qLaunch();
@@ -76,32 +76,32 @@ module.exports = (provider, log, concurrentLaunches) => {
         });
 
 
-        _.chain(q.splice(0, takeCount))
-         .zip(availableProviders.splice(0, takeCount))
-         .each(pair => {
-            var machine = pair[0],
-                provider = pair[1];
+        // _.chain(q.splice(0, takeCount))
+        //  .zip(availableProviders.splice(0, takeCount))
+        //  .each(pair => {
+        //     var machine = pair[0],
+        //         provider = pair[1];
 
-            launch(machine, provider)
-              .then(result => {
-                var response = result.response,
-                    provider = result.provider;
+        //     launch(machine, provider)
+        //       .then(result => {
+        //         var response = result.response,
+        //             provider = result.provider;
 
-                machine.response = response;
+        //         machine.response = response;
 
-                progress.launched(machine);
+        //         progress.launched(machine);
 
-                availableProviders.push(provider); // Promises should have an onFinally to avoid this duplication
-                qLaunch();
-              }, error => {
-                progress.error(error);
+        //         availableProviders.push(provider); // Promises should have an onFinally to avoid this duplication
+        //         qLaunch();
+        //       }, error => {
+        //         progress.error(error);
 
-                var provider = error.provider;
+        //         var provider = error.provider;
 
-                availableProviders.push(provider);
-                qLaunch();
-              });
-         });
+        //         availableProviders.push(provider);
+        //         qLaunch();
+        //       });
+        //  });
       }
 
       function launch(machine, provider) {

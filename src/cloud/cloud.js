@@ -6,7 +6,7 @@ module.exports = definition => {
   return {machineGenerator};
 
   function machineGenerator() {
-    clusterMachineGenerators = _.map()
+    // clusterMachineGenerators = _.map();
     return generators.loopUntilEmpty(clusterMachineGenerators);
   }
 
@@ -96,4 +96,4 @@ manifest = {
   debug: {
 
   }
-}
+};
