@@ -3,8 +3,8 @@ var fs = require('fs'),
     _ = require('lodash');
 
 module.exports = () => {
-  var cloudConfigTemplate = hogan.compile(fs.readFileSync(path.join(baseDir, 'cloud-config')).toString()),
-      bootstrapTemplate = hogan.compile(fs.readFileSync(path.join(baseDir, 'bootstrap.sh.template')).toString());
+  // var cloudConfigTemplate = hogan.compile(fs.readFileSync(path.join(baseDir, 'cloud-config')).toString()),
+  //     bootstrapTemplate = hogan.compile(fs.readFileSync(path.join(baseDir, 'bootstrap.sh.template')).toString());
 
   var {cloudConfigTemplate, bootstrapTemplate} = loadTemplates({cloudConfig: 'cloud-config', bootstrap: 'bootstrap.sh.template'});
 

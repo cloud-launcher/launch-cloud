@@ -8,6 +8,11 @@ module.exports = config => {
     return generatePlan(config).then(executePlan);
   }
 
+  function machineGenerator() {
+    // clusterMachineGenerators = _.map();
+    return generators.loopUntilEmpty(clusterMachineGenerators);
+  }
+
   function generatePlan(config) {
     console.log('generatePlan', config);
 
@@ -72,13 +77,13 @@ function processConcurrently(generator, processorConstructor, concurrencyCount) 
     var processors = createProcessors();
 
     g.map(processors, processor => {
-      processor.
-    })
+//      processor.
+    });
 
     launchMachine(machine);
 
     function createProcessors() {
-      return g.toArray(g.map(g.repeat(processorConstructor, concurrencyCount), constructor => constructor());
+      return g.toArray(g.map(g.repeat(processorConstructor, concurrencyCount), constructor => constructor()));
     }
 
     function acquireProcessor() {
@@ -159,4 +164,4 @@ manifest = {
   debug: {
 
   }
-}
+};

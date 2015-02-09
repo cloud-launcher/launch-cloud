@@ -6,7 +6,7 @@ cloud({test: 'config'})
       value => console.log('launched', value),
       error => console.log('launchError', error));
 
-return;
+//return;
 
 
 var request = require('request'),
