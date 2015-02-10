@@ -8,6 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "6to5": "^3.4.0",
+    "azure-mgmt-compute": "^0.9.15",
     "do-wrapper": "^0.1.1",
     "generator-trees": "^0.0.19",
     "glob": "^4.3.5",
