@@ -274,7 +274,7 @@ The DNS service (should be pluggable on the backend) should implement the functi
 
 The gulpfile.js utilizes ES6 features. Please use [`gulpur`](https://github.com/shinnn/gulpur): `npm install -g gulpur`.
 
-Available commands:
+For main development, run: `gulpur dev` from the repository's root.
 
 
 Commands            | Description
