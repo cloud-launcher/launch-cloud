@@ -13,6 +13,8 @@ Pass `launch-cloud` your desired configuration to launch.
         - [Digital Ocean](#providers)
     - [DNS](#dns)
     - [Locations](#locations)
+- [Development](#development)
+
 
 ###Installation
 
@@ -267,3 +269,17 @@ The DNS service (should be pluggable on the backend) should implement the functi
       'syd',
       'hkg'
     ]
+
+###Development
+
+The gulpfile.js utilizes ES6 features. Please use [`gulpur`](https://github.com/shinnn/gulpur): `npm install -g gulpur`.
+
+Available commands:
+
+
+Commands          | Description
+-------------------------------
+`gulpur dev`      | Watches files in `src`, runs them through `jshint` and if successful transpiles them into the `dist` folder.
+`gulpur build`    | Runs full build. Cleans `dist`, `jshint`'s `src`, transpiles to `dist`
+`gulpur transpile`| Transpiles code in `src` from ES6/7 to ES5.
+`gulpur clean`    | Deletes `dist`.
