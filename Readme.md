@@ -277,9 +277,9 @@ The gulpfile.js utilizes ES6 features. Please use [`gulpur`](https://github.com/
 Available commands:
 
 
-Commands          | Description
--------------------------------
-`gulpur dev`      | Watches files in `src`, runs them through `jshint` and if successful transpiles them into the `dist` folder.
-`gulpur build`    | Runs full build. Cleans `dist`, `jshint`'s `src`, transpiles to `dist`
-`gulpur transpile`| Transpiles code in `src` from ES6/7 to ES5.
-`gulpur clean`    | Deletes `dist`.
+Commands            | Description
+--------------------|----------
+`gulpur dev`        | Watches files in `src`, runs them through `jshint` and if successful transpiles them into the `dist` folder.
+`gulpur build`      | Runs full build. Cleans `dist`, `jshint`'s `src`, transpiles to `dist`
+`gulpur transpile`  | Transpiles code in `src` from ES6/7 to ES5.
+`gulpur clean`      | Deletes `dist`.
