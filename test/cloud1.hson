@@ -1,0 +1,34 @@
+{
+  domain: cloud-launcher.io,
+  root: https://github.com/cloud-launcher,
+  authorizations: ["ssh keys"],
+  locations: {
+    digitalocean: ["sfo1"]
+  },
+  configuration: {
+    bridge: 1,
+    www: 1,
+    api: 1,
+    influxdb: 1
+  },
+  roles: {
+    all: ["cadvisor"]
+  },
+  containers: {
+    cadvisor: {
+      container: google/cadvisor:latest
+      linkTo: influxdb
+    },
+    bridge: {
+      container: instantchat/node
+      linkTo: api
+    },
+    www: {
+      container: cloud-launcher/www
+      linkTo: api
+    },
+    influxdb: {
+      container: blakelapierre/broadcaster
+    }
+  }
+}

@@ -1,6 +1,7 @@
 launches clouds {╯°□°}╯彡{益}
 
-Pass `launch-cloud` your desired configuration to launch.
+Run anywhere.
+  Where "where" = Digital Ocean (and soon Azure and GCE) or any other provider that can handle the two method requirements.
 
 ###Usage
     launch-cloud yourCloud.json
