@@ -39,4 +39,4 @@ function digitalocean(config) {
 
 digitalocean.$name = 'digitalocean';
 digitalocean.$target = 'coreos';
-digitalocean.$locations = ['sfo1', 'nyc2', 'ams2', 'sgp1', 'lon1', 'nyc3', 'ams3'];
+digitalocean.$locations = ['sfo1', 'nyc2', 'ams2', 'sgp1', 'lon1', 'nyc3', 'ams3']; // Should we pull these from relevant API?
