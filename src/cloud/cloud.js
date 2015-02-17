@@ -154,7 +154,7 @@ function processConcurrently(generator, processorConstructor, concurrencyCount) 
 // }
 
 
-manifest = {
+let manifest = {
   locations: [{
     id: '',
     name: '',

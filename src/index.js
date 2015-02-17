@@ -1,11 +1,18 @@
 import fs from 'fs';
 import path from 'path';
+import util from 'util';
 import hjson from 'hjson';
 import minimist from 'minimist';
 import request from 'request';
 import stream from 'stream';
 import providers from './providers';
 import _ from 'lodash';
+
+require('./traceur-runtime');
+
+import launcher from './launcher';
+import cloud from './cloud/cloud';
+
 
 console.log(providers);
 
@@ -21,6 +28,10 @@ if (args._.length === 0) {
 const cloudFilePath = path.resolve(args._[0]);
 
 console.log('Launching', cloudFilePath, '...');
+readCloudFile(cloudFilePath)
+  .then(launcher().launch)
+  .catch(e => console.log('launch error:', e.stack));
+  // .then(description => launcher().launch(description));
 
 // promise(fs.readFile, cloudFilePath)
 //   .then(
@@ -36,12 +47,33 @@ console.log('Launching', cloudFilePath, '...');
 //       process.exit(1);
 //     });
 
-readCloudFile(cloudFilePath)
-  .then(parseCloudFile)
-  .then(validateCloud)
-  .then(generatePlan)
-  .then(executePlan)
-  .catch(e => console.log('error', e.stack));
+// async function* f() {
+//   yield 1;
+// }
+
+// (async function() {
+//   var list = [];
+//   var g = f();
+//   for (var i on g) {
+//     list.push(i);
+//   }
+//   assert.deepEqual(list, [1]);
+
+//   done();
+// })().catch(done);
+
+// function done() {
+//   console.log('arguments', arguments);
+// }
+
+
+
+// readCloudFile(cloudFilePath)
+//   .then(parseCloudFile)
+//   .then(validateCloud)
+//   .then(generatePlan)
+//   .then(executePlan)
+//   .catch(e => console.log('error', e.stack));
 
 function readCloudFile(path) {
   console.log('Reading cloudFile');
