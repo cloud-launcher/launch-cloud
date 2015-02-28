@@ -1,21 +1,25 @@
 const gulp = require('gulp');
 
 const {
-  sequence,
-  gutil,
   cached,
-  print,
-  sourcemaps,
-  traceur,
-  concat,
-  jshint,
   clean,
-  pipe
+  concat,
+  gutil,
+  jshint,
+  pipe,
+  print,
+  sequence,
+  sourcemaps,
+  tasks,
+  traceur
 } = require('gulp-load-plugins')({
   rename: {
     'gulp-util': 'gutil'
   }
 });
+
+const result = tasks(gulp, require);
+if (typeof result === 'string') console.log(result);
 
 gulp.task('default', ['build']);
 
@@ -23,7 +27,6 @@ gulp.task('build', sequence('clean', 'transpile'));
 
 gulp.task('dev', () => gulp.watch(paths.scripts, ['runtime']));
 
-console.log(traceur.RUNTIME_PATH);
 gulp.task('transpile', //['jshint'],
   () => pipe([
     gulp.src(paths.scripts)
