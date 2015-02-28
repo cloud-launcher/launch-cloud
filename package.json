@@ -1,6 +1,6 @@
 {
   "name": "base-node",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Base Node.JS Development Environment",
   "repository": "https://github.com/blakelapierre/base-node",
   "main": "index.js",
