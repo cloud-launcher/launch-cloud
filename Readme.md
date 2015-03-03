@@ -1,5 +1,12 @@
 A simple and highly configurable base project for ECMAScript 6 projects.
 
-Fork it, `npm install`, drop your code in `src/index.js`, and then run `grunt` at the command line.
+````
+git clone https://github.com/blakelapierre/base-node
+cd base-node
+npm install
+npm install -g gulpur
 
-Place test code in `src/tests/index.js` and run it with `grunt test`.
+gulpur build
+
+node .dist/index.js
+````
