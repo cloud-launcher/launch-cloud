@@ -1,32 +1,39 @@
-const gulp = require('gulp'),
-      plugins = require('gulp-load-plugins')({rename: {'gulp-util': 'gutil', 'gulp-cached': 'cache', 'gulp-6to5': 'to5'}});
+const gulp = require('gulp');
 
 const {
-  sequence,
-  gutil,
-  cache,
-  print,
-  watch,
-  sourcemaps,
-  to5,
-  traceur,
-  concat,
-  jshint,
+  cached,
   clean,
-  pipe
-} = plugins;
+  concat,
+  gutil,
+  jshint,
+  pipe,
+  print,
+  run,
+  sequence,
+  sourcemaps,
+  tasks,
+  traceur
+} = require('gulp-load-plugins')({
+  rename: {
+    'gulp-util': 'gutil'
+  }
+});
+
+const result = tasks(gulp, require);
+if (typeof result === 'string') console.log(result);
 
 gulp.task('default', ['build']);
 
 gulp.task('build', sequence('clean', 'transpile'));
 
-gulp.task('dev', () => gulp.watch(paths.scripts, ['runtime']));
+gulp.task('dev', ['runtime'], () => gulp.watch(paths.scripts, ['runtime']));
 
-console.log(traceur.RUNTIME_PATH);
+gulp.task('run', () => run(`node ${paths.dist}/index.js`).exec());
+
 gulp.task('transpile', //['jshint'],
   () => pipe([
     gulp.src(paths.scripts)
-    ,cache('transpile')
+    ,cached('transpile')
     ,print()
     ,sourcemaps.init()
     // ,to5()
@@ -48,7 +55,7 @@ gulp.task('runtime', ['transpile'],
 gulp.task('jshint',
   () => pipe([
     gulp.src(paths.scripts)
-    ,cache('jshint')
+    ,cached('jshint')
     ,print()
     ,jshint()
     ,jshint.reporter('jshint-stylish')
@@ -63,5 +70,5 @@ gulp.task('clean',
 
 const paths = {
   scripts: ['src/**/*.js'],
-  dist: 'dist'
+  dist: '.dist'
 };

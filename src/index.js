@@ -7,6 +7,8 @@ import core from 'launch-cloud-core';
 
 import DOWrapper from 'do-wrapper';
 
+import request from 'request';
+
 require('./traceur-runtime');
 
 const args = minimist(process.argv.slice(2));
@@ -31,7 +33,7 @@ const api = core({
     microsoft: {},
     rackspace: {}
   }
-}, (...args) => console.log(...args));
+}, (...args) => console.log(...args), request, 'https://index.docker.io');
 
 
 
@@ -39,6 +41,7 @@ const cloudFilePath = path.resolve(args._[0]);
 
 console.log('Launching', cloudFilePath, '...');
 readCloudFile(cloudFilePath)
+  .then(parseCloudFile)
   .then(cloud => api.launch(cloud))
   .catch(e => console.log('launch error:', e.stack));
   // .then(description => launcher().launch(description));
