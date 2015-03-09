@@ -26,7 +26,7 @@ gulp.task('default', ['build']);
 
 gulp.task('build', sequence('clean', 'transpile'));
 
-gulp.task('dev', () => gulp.watch(paths.scripts, ['runtime']));
+gulp.task('dev', ['runtime'], () => gulp.watch(paths.scripts, ['runtime']));
 
 gulp.task('run', () => run(`node ${paths.dist}/index.js`).exec());
 
