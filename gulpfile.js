@@ -24,7 +24,7 @@ if (typeof result === 'string') console.log(result);
 
 gulp.task('default', ['build']);
 
-gulp.task('build', sequence('clean', 'transpile'));
+gulp.task('build', sequence('clean', 'runtime'));
 
 gulp.task('dev', ['runtime'], () => gulp.watch(paths.scripts, ['runtime']));
 
