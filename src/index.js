@@ -1,22 +1,13 @@
 import fs from 'fs';
 import path from 'path';
-import util from 'util';
 import hjson from 'hjson';
 import minimist from 'minimist';
-import request from 'request';
-import stream from 'stream';
-import providers from './providers';
-import _ from 'lodash';
+
+import core from 'launch-cloud-core';
+
+import DOWrapper from 'do-wrapper';
 
 require('./traceur-runtime');
-
-import launcher from './launcher';
-import cloud from './cloud/cloud';
-
-
-console.log(providers);
-
-// const fs = promisify('fs');
 
 const args = minimist(process.argv.slice(2));
 
@@ -25,11 +16,30 @@ if (args._.length === 0) {
   process.exit(1);
 }
 
+const api = core({
+  providerApis: {
+    amazon: null,
+    digitalocean: DOWrapper,
+    google: null,
+    microsoft: null,
+    rackspace: null
+  },
+  providerConfigs: {
+    amazon: {},
+    digitalocean: {},
+    google: {},
+    microsoft: {},
+    rackspace: {}
+  }
+}, (...args) => console.log(...args));
+
+
+
 const cloudFilePath = path.resolve(args._[0]);
 
 console.log('Launching', cloudFilePath, '...');
 readCloudFile(cloudFilePath)
-  .then(launcher().launch)
+  .then(cloud => api.launch(cloud))
   .catch(e => console.log('launch error:', e.stack));
   // .then(description => launcher().launch(description));
 
@@ -90,112 +100,112 @@ function parseCloudFile(contents) {
   });
 }
 
-function validateCloud(cloudDescription) {
-  console.log('Validating cloud description', cloudDescription);
-  const {domain, root, authorizations, locations, configuration, roles, containers} = cloudDescription;
-  return validateDomain(cloudDescription)
-          .then(validateRoot)
-          .then(validateAuthorizations)
-          .then(validateLocations)
-          .then(validateContainers)
-          .then(validateRoles)
-          .then(validateConfiguration)
-          .then(() => { return cloudDescription; });
+// function validateCloud(cloudDescription) {
+//   console.log('Validating cloud description', cloudDescription);
+//   const {domain, root, authorizations, locations, configuration, roles, containers} = cloudDescription;
+//   return validateDomain(cloudDescription)
+//           .then(validateRoot)
+//           .then(validateAuthorizations)
+//           .then(validateLocations)
+//           .then(validateContainers)
+//           .then(validateRoles)
+//           .then(validateConfiguration)
+//           .then(() => { return cloudDescription; });
 
-  function validateDomain() {
-    console.log('Validating Domain');
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
-  }
+//   function validateDomain() {
+//     console.log('Validating Domain');
+//     return new Promise((resolve, reject) => {
+//       resolve();
+//     });
+//   }
 
-  function validateRoot() {
-    console.log('Validating Root');
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
-  }
+//   function validateRoot() {
+//     console.log('Validating Root');
+//     return new Promise((resolve, reject) => {
+//       resolve();
+//     });
+//   }
 
-  function validateAuthorizations() {
-    console.log('Validating Authorizations');
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
-  }
+//   function validateAuthorizations() {
+//     console.log('Validating Authorizations');
+//     return new Promise((resolve, reject) => {
+//       resolve();
+//     });
+//   }
 
-  function validateLocations() {
-    console.log('Validating Locations');
-    return new Promise((resolve, reject) => {
-      _.each(locations, (locations, providerName) => {
-        const provider = providers[providerName];
+//   function validateLocations() {
+//     console.log('Validating Locations');
+//     return new Promise((resolve, reject) => {
+//       _.each(locations, (locations, providerName) => {
+//         const provider = providers[providerName];
 
-        if (!provider) reject(new Error(['No provider with name', providerName].join(' ')));
+//         if (!provider) reject(new Error(['No provider with name', providerName].join(' ')));
 
-        _.each(locations, location => {
-          if (!_.contains(provider.$locations, location)) reject(new Error(['Provider', providerName, 'has no location', location].join(' ')));
-        });
-      });
+//         _.each(locations, location => {
+//           if (!_.contains(provider.$locations, location)) reject(new Error(['Provider', providerName, 'has no location', location].join(' ')));
+//         });
+//       });
 
-      resolve();
-    });
-  }
+//       resolve();
+//     });
+//   }
 
-  function validateContainers() {
-    console.log('Validating Containers');
-    return Promise
-              .all(_.map(containers, (containerDescription, name) => {
-                const [namespace, image] = containerDescription.container.split('/'),
-                      [repository, tag] = image.split(':');
+//   function validateContainers() {
+//     console.log('Validating Containers');
+//     return Promise
+//               .all(_.map(containers, (containerDescription, name) => {
+//                 const [namespace, image] = containerDescription.container.split('/'),
+//                       [repository, tag] = image.split(':');
 
-                return checkDockerRegistry(namespace, repository, tag);
-              }));
+//                 return checkDockerRegistry(namespace, repository, tag);
+//               }));
 
-    function checkDockerRegistry(namespace, repository, tag) {
-      tag = tag || 'latest';
-      const url = `https://registry.hub.docker.com/v1/repositories/${namespace}/${repository}/tags/${tag}`;
-      // console.log(`Looking for container ${namespace}/${repository}:${tag} at ${url}`);
-      return new Promise((resolve, reject) => {
-        request(url, (error, response, body) => {
-          if (error) reject(new Error(['Error checking Docker registry', error].join(' ')));
-          else {
-            if (response.statusCode === 200) {
-              console.log(`Found ${namespace}/${repository}:${tag}`);
-              resolve();
-            }
-            else reject(new Error(`Did not find ${namespace}/${repository}:${tag} on Docker registry!`));
-          }
-        });
-      });
-    }
-  }
+//     function checkDockerRegistry(namespace, repository, tag) {
+//       tag = tag || 'latest';
+//       const url = `https://registry.hub.docker.com/v1/repositories/${namespace}/${repository}/tags/${tag}`;
+//       // console.log(`Looking for container ${namespace}/${repository}:${tag} at ${url}`);
+//       return new Promise((resolve, reject) => {
+//         request(url, (error, response, body) => {
+//           if (error) reject(new Error(['Error checking Docker registry', error].join(' ')));
+//           else {
+//             if (response.statusCode === 200) {
+//               console.log(`Found ${namespace}/${repository}:${tag}`);
+//               resolve();
+//             }
+//             else reject(new Error(`Did not find ${namespace}/${repository}:${tag} on Docker registry!`));
+//           }
+//         });
+//       });
+//     }
+//   }
 
-  function validateRoles() {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
-  }
+//   function validateRoles() {
+//     return new Promise((resolve, reject) => {
+//       resolve();
+//     });
+//   }
 
-  function validateConfiguration() {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
-  }
-}
+//   function validateConfiguration() {
+//     return new Promise((resolve, reject) => {
+//       resolve();
+//     });
+//   }
+// }
 
-function generatePlan(cloudDescription) {
-  return new Promise((resolve, reject) => {
-    const plan = {cloudDescription};
-    console.log('generate', plan);
-    resolve(plan);
-  });
-}
+// function generatePlan(cloudDescription) {
+//   return new Promise((resolve, reject) => {
+//     const plan = {cloudDescription};
+//     console.log('generate', plan);
+//     resolve(plan);
+//   });
+// }
 
-function executePlan(plan) {
-  return new Promise((resolve, reject) => {
-    console.log('execute', plan);
-    resolve(true);
-  });
-}
+// function executePlan(plan) {
+//   return new Promise((resolve, reject) => {
+//     console.log('execute', plan);
+//     resolve(true);
+//   });
+// }
 
 // pipe([
 //   readCloudFile(cloudFilePath)
