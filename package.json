@@ -24,5 +24,8 @@
     "gulp-util": "^3.0.4",
     "traceur": "0.0.85",
     "traceur-runtime": "0.0.59"
+  },
+  "dependencies": {
+    "minimist": "^1.1.0"
   }
 }
