@@ -1,4 +1,5 @@
-const gulp = require('gulp');
+const gulp = require('gulp'),
+      minimist = require('minimist');
 
 const {
   cached,
@@ -19,16 +20,18 @@ const {
   }
 });
 
+const args = minimist(process.argv.slice(2));
+
 const result = tasks(gulp, require);
 if (typeof result === 'string') console.log(result);
 
 gulp.task('default', ['build']);
 
-gulp.task('build', sequence('clean', 'transpile'));
+gulp.task('build', sequence('clean', 'runtime'));
 
 gulp.task('dev', ['runtime'], () => gulp.watch(paths.scripts, ['runtime']));
 
-gulp.task('run', () => run(`node ${paths.dist}/index.js`).exec());
+gulp.task('run', () => run(`node ${paths.dist}/index.js ${args.args || ''}`).exec());
 
 gulp.task('transpile', //['jshint'],
   () => pipe([
