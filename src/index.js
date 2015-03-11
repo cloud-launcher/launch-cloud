@@ -18,32 +18,39 @@ if (args._.length === 0) {
   process.exit(1);
 }
 
-const api = core({
-  providerApis: {
-    amazon: null,
-    digitalocean: DOWrapper,
-    google: null,
-    microsoft: null,
-    rackspace: null
-  },
-  providerConfigs: {
-    amazon: {},
-    digitalocean: {},
-    google: {},
-    microsoft: {},
-    rackspace: {}
-  }
-}, (...args) => console.log(...args), request, 'https://index.docker.io');
-
+const dockerHubApiRoot = 'https://index.docker.io',
+      log = (...args) => console.log(...args),
+      api = core({
+        providerApis: {
+          amazon: null,
+          digitalocean: DOWrapper,
+          google: null,
+          microsoft: null,
+          rackspace: null
+        },
+        providerConfigs: {
+          amazon: {},
+          digitalocean: {},
+          google: {},
+          microsoft: {},
+          rackspace: {}
+        },
+        log,
+        request,
+        dockerHubApiRoot
+      });
 
 
 const cloudFilePath = path.resolve(args._[0]);
 
-console.log('Launching', cloudFilePath, '...');
+log('Launching', cloudFilePath, '...');
 readCloudFile(cloudFilePath)
   .then(parseCloudFile)
   .then(cloud => api.launch(cloud))
-  .catch(e => console.log('launch error:', e.stack));
+  .catch(e => console.log('Launch Failed', e));
+
+
+
   // .then(description => launcher().launch(description));
 
 // promise(fs.readFile, cloudFilePath)
