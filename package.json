@@ -2,34 +2,46 @@
   "name": "launch-cloud",
   "version": "0.0.1",
   "description": "launches clouds",
-  "repository": "https://github.com/cloud-launcher/lauch-cloud",
+  "repository": "https://github.com/cloud-launcher/launch-cloud",
   "main": ".dist/index.js",
   "author": "Blake La Pierre",
   "license": "MIT",
   "dependencies": {
-    "do-wrapper": "^0.1.1",
-    "generator-trees": "^0.0.20",
+    "do-wrapper": "^1.0.0",
+    "generator-trees": "^0.1.1",
+    "hjson": "^1.6.3",
+    "launch-cloud-core": "^0.0.1",
+    "minimist": "^1.1.1",
+    "promise-callback": "^3.0.0",
+    "request": "^2.54.0"
+  },
+  "devDependencies": {
+    "babelify": "^5.0.4",
+    "browserify": "^9.0.3",
     "gulp": "^3.8.11",
-    "gulp-babel": "^4.0.0",
+    "gulp-babel": "^4.0.1",
     "gulp-cached": "^1.0.4",
     "gulp-clean": "^0.3.1",
     "gulp-concat": "^2.5.2",
-    "gulp-jshint": "^1.9.2",
-    "gulp-load-plugins": "^0.8.1",
+    "gulp-jshint": "^1.9.4",
+    "gulp-load-plugins": "^0.9.0",
     "gulp-pipe": "^1.0.3",
     "gulp-print": "^1.1.0",
-    "gulp-run": "^1.6.6",
+    "gulp-run": "^1.6.7",
     "gulp-sequence": "^0.3.2",
-    "gulp-sourcemaps": "^1.5.0",
+    "gulp-sourcemaps": "^1.5.1",
     "gulp-tasks": "0.0.2",
     "gulp-traceur": "^0.17.0",
+    "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4",
-    "hjson": "^1.6.1",
-    "launch-cloud-core": "0.0.1",
-    "lodash": "^3.2.0",
-    "minimist": "^1.1.0",
-    "request": "^2.53.0",
-    "traceur": "0.0.86",
-    "traceur-runtime": "0.0.59"
+    "jshint-stylish": "^1.0.1",
+    "traceur": "^0.0.87",
+    "traceur-runtime": "^0.0.59",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
   }
 }

@@ -21,7 +21,6 @@ Run anywhere.
 
     npm install -g launch-cloud
 
-
 ###Sample Configuration
 ````JSON
 {
@@ -284,3 +283,4 @@ Commands            | Description
 `gulpur build`      | Runs full build. Cleans `dist`, `jshint`'s `src`, transpiles to `dist`
 `gulpur transpile`  | Transpiles code in `src` from ES6/7 to ES5.
 `gulpur clean`      | Deletes `dist`.
+`gulpur run --args cloudFile.hjson | Launches cloudFile.hjson

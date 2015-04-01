@@ -1,5 +1,7 @@
-const gulp = require('gulp'),
-      minimist = require('minimist');
+const browserify = require('browserify'),
+      gulp = require('gulp'),
+      minimist = require('minimist'),
+      source = require('vinyl-source-stream');
 
 const {
   cached,
@@ -13,7 +15,8 @@ const {
   sequence,
   sourcemaps,
   tasks,
-  traceur
+  traceur,
+  uglify
 } = require('gulp-load-plugins')({
   rename: {
     'gulp-util': 'gutil'
@@ -31,7 +34,7 @@ gulp.task('build', sequence('clean', 'runtime'));
 
 gulp.task('dev', ['runtime'], () => gulp.watch(paths.scripts, ['runtime']));
 
-gulp.task('run', () => run(`node ${paths.dist}/index.js ${args.args || ''}`).exec());
+gulp.task('run', ['runtime'], () => run(`node ${paths.dist}/index.js ${args.args || ''}`).exec());
 
 gulp.task('transpile', //['jshint'],
   () => pipe([
@@ -45,6 +48,26 @@ gulp.task('transpile', //['jshint'],
     ,gulp.dest(paths.dist)
   ])
   .on('error', function(e) { console.log(e); }));
+
+gulp.task('bundle', ['browserify'],
+  () => pipe([
+    gulp.src(['./.dist/app.js'])
+    ,uglify()
+    ,print()
+    ,gulp.dest(paths.dist)
+  ]));
+
+gulp.task('browserify', ['jshint'],
+  () => pipe([
+    browserify({
+      entries: ['./.dist/index.js'],
+      builtins: false,
+      detectGlobals: false
+    }).bundle()
+    ,source('app.js')
+    ,print()
+    ,gulp.dest(paths.dist)
+  ]));
 
 gulp.task('runtime', ['transpile'],
   () => pipe([
