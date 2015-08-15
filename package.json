@@ -11,6 +11,7 @@
     "generator-trees": "^0.1.1",
     "hjson": "^1.6.3",
     "launch-cloud-core": "^0.0.1",
+    "lodash": "^3.6.0",
     "minimist": "^1.1.1",
     "promise-callback": "^3.0.0",
     "request": "^2.54.0"

@@ -12,6 +12,8 @@ import providers from './providers';
 
 import request from 'request';
 
+import _ from 'lodash';
+
 require('./traceur-runtime');
 
 const args = minimist(process.argv.slice(2));
@@ -50,6 +52,15 @@ const cloudFile = args._[0];
 log('Launching', cloudFile, '...');
 readCloudFile(cloudFile)
   .then(parseCloudFile)
+  .then(cloud => {
+    // maybe only do this for the providers being used
+    _.each(providers, provider => {
+      _.each(provider.credentialSchema, (schema, name) => {
+        provider.credentials[name] = process.env[schema.environmentVariable];
+      });
+    });
+    return cloud;
+  })
   .then(cloud => api.launch(cloud))
   .catch(e => console.log('Launch Failed', e.stack));
 
