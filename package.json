@@ -1,10 +1,12 @@
 {
   "name": "launch-cloud",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "launches clouds",
   "repository": "https://github.com/cloud-launcher/launch-cloud",
   "main": ".dist/index.js",
-  "bin": {"launch-cloud": ".dist/index.js"},
+  "bin": {
+    "launch-cloud": ".dist/index.js"
+  },
   "author": "Blake La Pierre",
   "license": "MIT",
   "dependencies": {
