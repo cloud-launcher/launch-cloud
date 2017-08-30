@@ -4,6 +4,7 @@
   "description": "launches clouds",
   "repository": "https://github.com/cloud-launcher/launch-cloud",
   "main": ".dist/index.js",
+  "bin": {"launch-cloud": ".dist/index.js"},
   "author": "Blake La Pierre",
   "license": "MIT",
   "dependencies": {
