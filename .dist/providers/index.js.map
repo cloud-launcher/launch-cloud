@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["providers/index.js"],"sourcesContent":["import digitalocean from 'provider-digitalocean/.dist/provider/server';\n\nmodule.exports = {\n  digitalocean: digitalocean()\n};"],"file":"providers/index.js","sourceRoot":"/source/"}
