@@ -1,6 +1,17 @@
-"use strict";
-var $__provider_45_digitalocean_47__46_dist_47_provider_47_server__;
-var digitalocean = ($__provider_45_digitalocean_47__46_dist_47_provider_47_server__ = require("provider-digitalocean/.dist/provider/server"), $__provider_45_digitalocean_47__46_dist_47_provider_47_server__ && $__provider_45_digitalocean_47__46_dist_47_provider_47_server__.__esModule && $__provider_45_digitalocean_47__46_dist_47_provider_47_server__ || {default: $__provider_45_digitalocean_47__46_dist_47_provider_47_server__}).default;
-module.exports = {digitalocean: digitalocean()};
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "provider-digitalocean/.dist/provider/server"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    const DO = require("provider-digitalocean/.dist/provider/server");
+    const digitalocean = DO();
+    exports.digitalocean = digitalocean;
+});
 
-//# sourceMappingURL=../providers/index.js.map
+//# sourceMappingURL=index.js.map

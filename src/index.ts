@@ -1,20 +1,18 @@
-import fs from 'fs';
-import path from 'path';
-import url from 'url';
+import * as fs from 'fs';
+import * as path from 'path';
+import {URL, format} from 'url';
 
 import hjson from 'hjson';
-import minimist from 'minimist';
+import * as minimist from 'minimist';
 import promise from 'promise-callback';
 
 import core from 'launch-cloud-core';
 
-import providers from './providers';
+import * as providers from './providers';
 
 import request from 'request';
 
 import _ from 'lodash';
-
-require('./traceur-runtime');
 
 const args = minimist(process.argv.slice(2));
 
@@ -75,15 +73,16 @@ function readCloudFile(cloudFile) {
 
   function handleNonLocalFile(error, cloudFile) {
     if (error.code === 'ENOENT') {
-      const parsed = url.parse(cloudFile);
+      const parsed = new URL(cloudFile);
 
       if (!parsed.host) {
         parsed.protocol = 'https';
         parsed.host = 'raw.githubusercontent.com';
-        parsed.path = cloudFile.endsWith('json') ? cloudFile : `${cloudFile}/master/cloud.hjson`;
+        parsed.pathname = cloudFile.endsWith('json') ? cloudFile : `${cloudFile}/master/cloud.hjson`;
       }
 
-      const requestUrl = parsed.format();
+      const requestUrl = format(parsed);
+      // const requestUrl = parsed.format();
 
       console.log(`cloudFile not found locally. Checking Github...${requestUrl}`);
 
